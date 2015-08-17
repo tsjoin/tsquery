@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'tsquery'
-  s.version       = '1.0.1'
+  s.version       = '1.0.2'
   s.authors       = ['Mario Uher']
   s.email         = ['uher.mario@gmail.com']
   s.summary       = %q{Automate your TeamSpeak3 server with Ruby!}
