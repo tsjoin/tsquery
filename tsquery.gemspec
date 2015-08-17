@@ -3,9 +3,8 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['Mario Uher']
   spec.email         = ['uher.mario@gmail.com']
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ''
+  spec.summary       = %q{Automate your TeamSpeak3 server with Ruby!}
+  spec.homepage      = 'https://github.com/tsjoin/tsquery'
   spec.license       = 'MIT'
 
   spec.files         = Dir['*']
