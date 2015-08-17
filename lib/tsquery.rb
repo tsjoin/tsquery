@@ -3,7 +3,7 @@ require 'logger'
 
 
 class Tsquery
-  def initialize(logger: Logger.new)
+  def initialize(logger: Logger.new(STDOUT))
     @logger = logger
   end
 
