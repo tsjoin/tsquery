@@ -125,6 +125,15 @@ class TsqueryTest < Minitest::Test
   end
 
 
+  def test_execute_command_which_returns_an_empty_list
+    @telnet.expect :cmd, <<-RESPONSE.gsub(/^\s*/, ''), ['String' => 'privilegekeylist', 'Timeout' => 3, 'Match' => /error id=\d+/]
+      error id=1281 msg=database\sempty\sresult\sset
+    RESPONSE
+
+    assert_nil @tsquery.privilegekeylist
+  end
+
+
   def test_login
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'login serveradmin password', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 

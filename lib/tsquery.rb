@@ -104,6 +104,7 @@ private
 
     first, last = response.split(/\n\r?/)
     @logger.info "<= #{first}"
+    return nil unless last
     parse last
 
     first.split('|').map do |arguments|
