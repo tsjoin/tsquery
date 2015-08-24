@@ -114,6 +114,17 @@ class TsqueryTest < Minitest::Test
   end
 
 
+  def test_execute_command_which_returns_a_list_including_only_a_key
+    @telnet.expect :cmd, <<-RESPONSE.gsub(/^\s*/, ''), ['String' => 'serverinfo', 'Timeout' => 3, 'Match' => /error id=\d+/]
+      virtualserver_ip virtualserver_weblist_enabled=1 virtualserver_ask_for_privilegekey=0
+      error id=0 msg=ok
+    RESPONSE
+
+    assert_kind_of Hash, serverinfo = @tsquery.serverinfo
+    assert_nil serverinfo.fetch('virtualserver_ip')
+  end
+
+
   def test_login
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'login serveradmin password', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 

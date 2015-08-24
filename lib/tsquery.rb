@@ -140,15 +140,16 @@ private
   def deserialize_arguments(string)
     string.split.each_with_object({}) do |string, hash|
       key, value = string.split('=')
-      value = value.gsub(INVERTED_ESCAPE_PATTERNS_REGEXP, INVERTED_ESCAPE_PATTERNS)
 
       hash[key] = case value
+      when nil
+        nil
       when /^\d+$/
         value.to_i
       when /^\d+\.\d+$/
         value.to_f
       else
-        value
+        value = value.gsub(INVERTED_ESCAPE_PATTERNS_REGEXP, INVERTED_ESCAPE_PATTERNS)
       end
     end
   end
