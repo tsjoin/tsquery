@@ -32,7 +32,7 @@ class Tsquery
         'Timeout' => 3,
         'Match'   => /error id=\d+/
       ))
-    when /info$/, 'whoami', 'version'
+    when /info$/, 'whoami', 'version', 'clientgetdbidfromuid'
       parse_info(@telnet.cmd(
         'String'  => full_command,
         'Timeout' => 3,
