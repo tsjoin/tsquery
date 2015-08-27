@@ -50,6 +50,6 @@ class LazyTsqueryTest < Minitest::Test
 
 
   def teardown
-    @telnet.verify
+    assert @telnet.verify
   end
 end

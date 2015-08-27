@@ -78,7 +78,7 @@ class TsqueryTest < Minitest::Test
     @tsquery = Tsquery.new(logger: logger)
     @tsquery.connect telnet_class: @telnet_class
     @tsquery.execute 'serverstop', sid: 1
-    logger.verify
+    assert logger.verify
   end
 
 
@@ -171,6 +171,6 @@ class TsqueryTest < Minitest::Test
 
 
   def teardown
-    @telnet.verify
+    assert @telnet.verify
   end
 end
