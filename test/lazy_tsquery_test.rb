@@ -49,6 +49,11 @@ class LazyTsqueryTest < Minitest::Test
   end
 
 
+  def test_close
+    @tsquery.close
+  end
+
+
   def teardown
     assert @telnet.verify
   end

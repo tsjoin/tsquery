@@ -62,4 +62,10 @@ class LazyTsquery < DelegateClass(Tsquery)
   def inspect
     __getobj__.inspect
   end
+
+
+  def close
+    __getobj__.close
+  rescue NoMethodError
+  end
 end
