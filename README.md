@@ -57,7 +57,6 @@ tsquery.close
 ## I want it all!
 ```ruby
 tsquery = LazyTsquery.new(RetryingTsquery.new(Tsquery.new))
-# ...
 ```
 
 ## Contributing
