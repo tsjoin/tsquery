@@ -1,0 +1,16 @@
+language: ruby
+
+rvm:
+  - 2.2.0
+  - ruby-head
+
+gemfile:
+  - Gemfile
+
+branches:
+  only:
+    - master
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
