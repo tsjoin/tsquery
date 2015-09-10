@@ -1,5 +1,6 @@
 # tsquery
 > Automate your TeamSpeak 3 server with Ruby!
+
 Learn about TeamSpeak 3 ServerQuery [here](http://media.teamspeak.com/ts3_literature/TeamSpeak%203%20Server%20Query%20Manual.pdf).
 
 ## Tsquery
