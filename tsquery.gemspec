@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name          = 'tsquery'
-  s.version       = '1.0.4'
+  s.version       = '2.0.0'
   s.required_ruby_version = '>= 2.2.0'
   s.authors       = ['Mario Uher']
   s.email         = ['uher.mario@gmail.com']
