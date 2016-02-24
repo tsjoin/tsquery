@@ -54,7 +54,7 @@ class LazyTsquery < DelegateClass(Tsquery)
   def login(username: 'serveradmin', password:)
     execute 'login', username, password
     nil
-  rescue Error
+  rescue Tsquery::Error
     false
   end
 
