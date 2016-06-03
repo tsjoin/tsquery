@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 require_relative './tsquery'
 require 'delegate'
-
 
 # LazyTsquery delays the connection and the execution of
 # following commands (`use`, `login`) until another command
@@ -16,7 +16,6 @@ class LazyTsquery < DelegateClass(Tsquery)
       super(**kwargs)
     end
   end
-
 
   def execute(command, *args)
     case command
@@ -37,19 +36,15 @@ class LazyTsquery < DelegateClass(Tsquery)
     end
   end
 
-
   # Needed for the delegation to work.
-
 
   def method_missing(command, *args)
     execute(command.to_s, *args)
   end
 
-
   def respond_to_missing?(command, *)
     !!(command =~ /[[:alnum:]]$/)
   end
-
 
   def login(username: 'serveradmin', password:)
     execute 'login', username, password
@@ -58,11 +53,9 @@ class LazyTsquery < DelegateClass(Tsquery)
     false
   end
 
-
   def inspect
     __getobj__.inspect
   end
-
 
   def close
     __getobj__.close

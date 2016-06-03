@@ -1,6 +1,6 @@
+# frozen_string_literal: true
 require_relative './tsquery'
 require 'delegate'
-
 
 # Inspired by https://rubytapas.dpdcart.com/subscriber/post?id=689
 class RetryingTsquery < DelegateClass(Tsquery)
@@ -12,7 +12,6 @@ class RetryingTsquery < DelegateClass(Tsquery)
     Kernel.raise
   end
 
-
   def execute(*args, times: 3, sleep: Kernel.method(:sleep), **keyword_args)
     super(*args, **keyword_args)
   rescue Tsquery::UnknownCommand
@@ -23,19 +22,15 @@ class RetryingTsquery < DelegateClass(Tsquery)
     Kernel.raise
   end
 
-
   # Needed for the delegation to work.
-
 
   def method_missing(command, *args)
     execute(command.to_s, *args)
   end
 
-
   def respond_to_missing?(command, *)
     !!(command =~ /[[:alnum:]]$/)
   end
-
 
   def inspect
     __getobj__.inspect

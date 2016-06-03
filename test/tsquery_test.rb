@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 require_relative './test_helper'
-
 
 class TsqueryTest < Minitest::Test
   def setup
@@ -16,13 +16,11 @@ class TsqueryTest < Minitest::Test
     @tsquery.connect telnet_class: @telnet_class
   end
 
-
   def test_execute_simple_command
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'quit', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     @tsquery.execute 'quit'
   end
-
 
   def test_execute_unknown_command
     @telnet.expect :cmd, 'error id=256 msg=command\snot\sfound', ['String' => 'unknown', 'Timeout' => 3, 'Match' => /^error id=\d+/]
@@ -32,40 +30,35 @@ class TsqueryTest < Minitest::Test
     end
   end
 
-
   def test_execute_simple_command_with_args
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'login serveradmin password', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     @tsquery.execute 'login', 'serveradmin', 'password'
   end
 
-
   def test_execute_complex_command_with_args
     command = 'serveredit virtualserver_name=tsjoin virtualserver_welcomemessage=Welcome\smessage'
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => command, 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     @tsquery.execute 'serveredit',
-      'virtualserver_name' => 'tsjoin',
-      'virtualserver_welcomemessage' => 'Welcome message'
+                     'virtualserver_name'           => 'tsjoin',
+                     'virtualserver_welcomemessage' => 'Welcome message'
   end
-
 
   def test_execute_command_with_symbol_args
     command = 'serveredit virtualserver_name=tsjoin virtualserver_welcomemessage=Welcome\smessage'
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => command, 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     @tsquery.execute 'serveredit',
-      virtualserver_name: 'tsjoin',
-      virtualserver_welcomemessage: 'Welcome message'
+                     virtualserver_name:           'tsjoin',
+                     virtualserver_welcomemessage: 'Welcome message'
   end
-
 
   def test_execute_command_with_numeric_args
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'serverstop sid=1', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     @tsquery.execute 'serverstop', sid: 1
   end
-
 
   def test_execute_commands_are_logged
     logger = Minitest::Mock.new
@@ -81,7 +74,6 @@ class TsqueryTest < Minitest::Test
     assert logger.verify
   end
 
-
   def test_execute_failing_command
     @telnet.expect :cmd, nil, ['String' => 'serverstop sid=1', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
@@ -89,7 +81,6 @@ class TsqueryTest < Minitest::Test
       @tsquery.serverstop sid: 1
     end
   end
-
 
   def test_execute_command_which_returns_properties
     @telnet.expect :cmd, <<-RESPONSE.gsub(/^\s*/, ''), ['String' => 'instanceinfo', 'Timeout' => 3, 'Match' => /error id=\d+/]
@@ -100,7 +91,6 @@ class TsqueryTest < Minitest::Test
     assert_kind_of Hash, properties = @tsquery.instanceinfo
     assert_equal 23, properties.fetch('serverinstance_database_version')
   end
-
 
   def test_execute_command_which_returns_a_list
     @telnet.expect :cmd, <<-RESPONSE.gsub(/^\s*/, ''), ['String' => 'clientlist', 'Timeout' => 3, 'Match' => /error id=\d+/]
@@ -113,7 +103,6 @@ class TsqueryTest < Minitest::Test
     assert_equal 'mario', clients.first.fetch('client_nickname')
   end
 
-
   def test_execute_command_which_returns_a_list_including_only_a_key
     @telnet.expect :cmd, <<-RESPONSE.gsub(/^\s*/, ''), ['String' => 'serverinfo', 'Timeout' => 3, 'Match' => /error id=\d+/]
       virtualserver_ip virtualserver_weblist_enabled=1 virtualserver_ask_for_privilegekey=0
@@ -124,7 +113,6 @@ class TsqueryTest < Minitest::Test
     assert_nil serverinfo.fetch('virtualserver_ip')
   end
 
-
   def test_execute_command_which_returns_an_empty_list
     @telnet.expect :cmd, <<-RESPONSE.gsub(/^\s*/, ''), ['String' => 'privilegekeylist', 'Timeout' => 3, 'Match' => /error id=\d+/]
       error id=1281 msg=database\sempty\sresult\sset
@@ -133,13 +121,11 @@ class TsqueryTest < Minitest::Test
     assert_nil @tsquery.privilegekeylist
   end
 
-
   def test_login
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'login serveradmin password', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     assert @tsquery.login(password: 'password')
   end
-
 
   def test_failing_login
     @telnet.expect :cmd, 'error id=520 msg=invalid\sloginname\sor\spassword', ['String' => 'login serveradmin wrong', 'Timeout' => 3, 'Match' => /^error id=\d+/]
@@ -147,13 +133,11 @@ class TsqueryTest < Minitest::Test
     refute @tsquery.login(password: 'wrong')
   end
 
-
   def test_method_missing
     @telnet.expect :cmd, 'error id=0 msg=ok', ['String' => 'logout', 'Timeout' => 3, 'Match' => /^error id=\d+/]
 
     @tsquery.logout
   end
-
 
   def test_method_missing_with_arguments
     command = 'serveredit virtualserver_name=tsjoin virtualserver_welcomemessage=Welcome\smessage'
@@ -162,13 +146,11 @@ class TsqueryTest < Minitest::Test
     @tsquery.serveredit 'virtualserver_name' => 'tsjoin', 'virtualserver_welcomemessage' => 'Welcome message'
   end
 
-
   def test_close
     @telnet.expect :close, nil, []
 
     @tsquery.close
   end
-
 
   def teardown
     assert @telnet.verify
